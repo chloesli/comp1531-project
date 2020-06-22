@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="ingredients-sec">
+
+<br>
+
+<form class="order-sec" method="POST" action="{{ url_for('new_order') }}">
+    <input type="hidden" name="amount" value="{{ request.form.get('amount')|int }}">
+    {% for x in range(request.form.get('amount')|int) %}
+    <div class="order-type">
+        <input type="hidden" name="{{ 'main_' + x|string }}" value="{{ request.form.get('main_' + x|string) }}">
+        
+        <h1>Main number: {{ x + 1 }} ({{ request.form.get('main_' + x|string) }})</h1>
+        <!-- get ingredients for burger_type -->
+
+        {% for ingredient in ingredients %}
+            {% set name =  'main_' + x|string + '_' + ingredient.inv_id|string %}
+
+            {% if 'burger' == request.form.get('main_' + x|string) %}
+                {% if ingredient.i_type != 'wrap' %}
+                    <p>{{ ingredient }}: <input type="number" name="{{ name }}" value="{% if request.form[name] %}{{ request.form[name] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}></p>
+
+                {% endif %}
+
+            {% elif 'wrap' == request.form.get('main_' + x|string) %}
+                {% if ingredient.i_type != 'bun' %}
+                    <p>{{ ingredient }}: <input type="number" name="{{ name }}" value="{% if request.form[name] %}{{ request.form[name] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}></p>
+                {% endif %}
+            {% endif %}
+
+            {% if errors %}
+                {% if errors[name] is not none %}
+                    {{ errors[name] }}
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+    </div>
+    {% endfor %}
+ 
+    <div class="order-type">
+    <h1>Sundaes</h1>
+    <p>Sundae (Small): <input type="number" max="10" min="0" name="sundae_small" value="{% if request.form['sundae_small'] %}{{ request.form['sundae_small'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+        {% if errors %}
+            {% if errors['sundae_small'] is not none %}
+                {{ errors['sundae_small'] }}
+            {% endif %}
+        {% endif %}
+        </p>
+    <p>Sundae (Medium): <input type="number" max="10" min="0" name="sundae_medium" value="{% if request.form['sundae_medium'] %}{{ request.form['sundae_medium'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+        {% if errors %}
+            {% if errors['sundae_small'] is not none %}
+                {{ errors['sundae_small'] }}
+            {% endif %}
+        {% endif %}
+        </p>
+    <p>Sundae (Large): <input type="number" max="10" min="0" name="sundae_large" value="{% if request.form['sundae_large'] %}{{ request.form['sundae_large'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['sundae_small'] is not none %}
+            {{ errors['sundae_small'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+    </div>
+    <div class="order-type">
+    <h1>Nuggets</h1>
+
+    <p>Nuggets (3 Pack): <input type="number" max="10" min="0" name="nuggets_3" value="{% if request.form['nuggets_3'] %}{{ request.form['nuggets_3'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['nuggets_3'] is not none %}
+            {{ errors['nuggets_3'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Nuggets (6 Pack): <input type="number" max="10" min="0" name="nuggets_6" value="{% if request.form['nuggets_6'] %}{{ request.form['nuggets_6'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['nuggets_6'] is not none %}
+            {{ errors['nuggets_6'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+    </div>
+    <div class="order-type">
+    <h1>Fries</h1>
+    <p>Fries (Small): <input type="number" max="10" min="0" name="fries_small" value="{% if request.form['fries_small'] %}{{ request.form['fries_small'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['fries_small'] is not none %}
+            {{ errors['fries_small'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Fries (Medium): <input type="number" max="10" min="0" name="fries_medium" value="{% if request.form['fries_medium'] %}{{ request.form['fries_medium'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['fries_medium'] is not none %}
+            {{ errors['fries_medium'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Fries (Large): <input type="number" max="10" min="0" name="fries_large" value="{% if request.form['fries_large'] %}{{ request.form['fries_large'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>
+
+    {% if errors %}
+        {% if errors['fries_large'] is not none %}
+            {{ errors['fries_large'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    </div>
+    <div class="order-type">
+
+    <h1>Drinks</h1>
+    
+    <p>Sprite Can: <input type="number" max="10" min="0" name="sprite_can" value="{% if request.form['sprite_can'] %}{{ request.form['sprite_can'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['sprite_can'] is not none %}
+            {{ errors['sprite_can'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Sprite Bottle: <input type="number" max="10" min="0" name="sprite_bottle" value="{% if request.form['sprite_bottle'] %}{{ request.form['sprite_bottle'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['sprite_bottle'] is not none %}
+            {{ errors['sprite_bottle'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+    
+    <p>Pepsi Can: <input type="number" max="10" min="0" name="pepsi_can" value="{% if request.form['pepsi_can'] %}{{ request.form['pepsi_can'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['pepsi_can'] is not none %}
+            {{ errors['pepsi_can'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Pepsi Bottle: <input type="number" max="10" min="0" name="pepsi_bottle" value="{% if request.form['pepsi_bottle'] %}{{ request.form['pepsi_bottle'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['pepsi_bottle'] is not none %}
+            {{ errors['pepsi_bottle'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Orange Juice (Small): <input type="number" max="10" min="0" name="orange_juice_small" value="{% if request.form['orange_juice_small'] %}{{ request.form['orange_juice_small'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['orange_juice_small'] is not none %}
+            {{ errors['orange_juice_small'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+    
+    <p>Orange Juice (Medium): <input type="number" max="10" min="0" name="orange_juice_medium" value="{% if request.form['orange_juice_medium'] %}{{ request.form['orange_juice_medium'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['orange_juice_medium'] is not none %}
+            {{ errors['orange_juice_medium'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+
+    <p>Orange Juice (Large): <input type="number" max="10" min="0" name="orange_juice_large" value="{% if request.form['orange_juice_large'] %}{{ request.form['orange_juice_large'] }}{% else %}0{% endif %}" {% if confirm %} readonly{% endif %}>    
+    {% if errors %}
+        {% if errors['orange_juice_large'] is not none %}
+            {{ errors['orange_juice_large'] }}
+        {% endif %}
+    {% endif %}
+    </p>
+    </div>
+
+    {% if confirm %}
+        <div class="total-price">Order total: ${{ fee }}</div>
+        
+    <input type="submit" class="green-but" name="confirm" value="Confirm">
+    {% else %}
+        {% if fee == 0%}
+            <div class="total-price">You must add something to your cart!</div>
+        {%endif%}
+        <input type="submit" class="green-but" value="Next">
+    {% endif %}
+
+</form>
+</section>
+{% endblock %}

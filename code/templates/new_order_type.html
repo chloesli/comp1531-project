@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="order-sec">
+<br>
+<form method="POST" style="width:100%" class="order-type" action="{{ url_for('new_order') }}">
+    <div>
+        <h1>What type of mains would you like?</h1>
+
+        <input type="hidden" name="first_try" value="true"></input>
+
+        <input type="hidden" name="amount" value="{{ request.args.get('amount') }}"></input>
+
+        {% for x in range(request.args.get('amount')|int) %}
+            <p>Main number: {{ x + 1 }}
+            <select name="main_{{ x }}">
+                <option value="burger">Burger</option>
+                <option value="wrap">Wrap</option>
+            </select>
+            </p>
+        {% endfor %}
+    </div>
+
+    <input class="green-but" type="submit" value="Next">
+</form>
+</section>
+{% endblock %}

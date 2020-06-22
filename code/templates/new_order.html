@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="ingredients-sec">
+<br>
+<form method="POST" action="{{ url_for('new_order') }}">
+    <input type="submit" value="New Order">
+</form>
+</section>
+{% endblock %}

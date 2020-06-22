@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="image">
+    <div class="order-but">Fresh and Delicious Burgers and Wraps <br>
+        <a href="{{ url_for('new_order') }}">Order Now </a></div>
+    <img src="{{url_for('static', filename='bbq.jpg')}}" width="100%"/>
+
+</div>
+
+<section class="ingredients-sec">
+    <div class="title">Choose from our WIDE range of ingredients!</div>
+    <div class="ingredient">
+        <h1>Buns</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'bun' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+
+    </div>
+    <div class="ingredient">
+        <h1>Wraps</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'wrap' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+        
+    </div>
+    <div class="ingredient">
+        <h1>Patties</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'patty' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+            
+    </div>
+    <div class="ingredient">
+        <h1>Vegetables</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'vegetable' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+            
+    </div>
+    <div class="ingredient">
+        <h1>Cheese</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'cheese' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+                    
+    </div>
+    <div class="ingredient">
+        <h1>Sauce</h1>
+        {% for ingredient in ingredients %}
+            {% if ingredient.i_type == 'sauce' %}
+                <p>{{ ingredient }}</p>
+            {%endif%}
+        {% endfor %}
+                
+    </div>
+    <div class="ingredient" style="width: 100%">
+        <center>
+        <h1>Don't forget to try out our new Menu Item: CHOCOLATE SUNDAES 
+            <p>Now available in Small, Medium or Large</p>
+
+        </h1>
+            
+        </center>
+        </div>
+</section>
+ 
+ 
+{% endblock %}

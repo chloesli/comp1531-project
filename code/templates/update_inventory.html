@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="title">Inventory:</div>
+<table> <form method="POST" action="{{ url_for('update_inventory') }}">
+
+        <tr>
+            <th>Item Id</th>
+            <th>Item</th>
+            <th>Amount</th>
+        </tr>
+        {% for inv in inventory %}
+        <p>
+        <tr>
+            <td>
+                {{ inv.inv_id }}
+            </td>
+            <td>
+                {{ inv }}
+            <td>
+                {% if errors %}
+                    <input type="number" value="{{ request.form[inv.inv_id|string] }}" name="{{ inv.inv_id }}"></input>
+                {% else %}
+                    <input type="number" value="{{ inv.amount }}" name="{{ inv.inv_id }}"></input>
+                {% endif %}
+
+                {% if errors %}
+                    {% if errors[inv.inv_id|string] is not none %}
+                        {{ errors[inv.inv_id|string] }}
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        </p>
+        {% endfor %}
+</table> <input class="green-but"type="submit" value="Update"> </form>
+
+
+{% endblock %}

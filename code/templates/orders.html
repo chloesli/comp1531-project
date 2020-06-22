@@ -1,0 +1,102 @@
+
+{% extends 'base.html' %}
+{% block body %}
+<section class="ingredients-sec">
+<div class="title">Pending Orders:</div>
+
+<table>
+    <tr>
+        <th>Order Id</th>
+        <th>Mains</th>
+        <th>Sides</th>
+        <th>Drinks</th>
+        <th>Update Status</th>
+    </tr>
+
+    {% for order in orders %}
+        {% if not order.completed %}
+        <tr>
+            <td>
+                <a href="{{ url_for('order', order_id=order.order_id) }}">Order #{{ order.order_id }}</a>
+                <br> Price: ${{order.calculate_price()}}
+            </td>
+            <td>
+                {% for main in order.mains %}
+                   {{ main }}
+                    <ol>
+                    {% for ingredient in main.ingredients %}
+                        {% if ingredient.amount > 0 %}
+                    <li> {{ ingredient }} ({{ ingredient.amount }})</li>
+                        {%endif%}
+                    {% endfor %}
+                    </ol>
+                {% endfor %}
+
+            </td>
+            <td>
+                {% for side in order.sides %}
+                    <p>{{ side }}</p>
+                {% endfor %}
+                {% for sundae in order.sundaes %}
+                    <p>{{ sundae }}</p>
+                {% endfor %}
+            </td>
+            <td>
+                {% for drink in order.drinks %}
+                    <p>{{ drink }}</p>
+                {% endfor %}
+            </td>
+            <td>
+                <center>
+                <div class="green-but"><a href="{{ url_for('complete_order', order_id=order.order_id) }}">Complete</a> </div>
+                <div class="green-but"><a href="{{ url_for('cancel_order', order_id=order.order_id) }}">Cancel </a> </div>
+            </center>
+            </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+<!-- COMPLETED ORDERS-->
+<div class="title">Completed Orders:</div>
+
+    <table>
+        <tr>
+            <th>Order Id</th>
+            <th>Mains</th>
+            <th>Sides</th>
+            <th>Drinks</th>
+        </tr>
+
+        {% for order in completed_orders %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('order', order_id=order.order_id) }}">Order #{{ order.order_id }}</a>
+                </td>
+                <td>
+                    {% for main in order.mains %}
+                        {{ main }}
+                        <ol>
+                        {% for ingredient in main.ingredients %}
+                            <li> {{ ingredient }}</li>
+                        {% endfor %}
+                        </ol>
+                    {% endfor %}
+
+                </td>
+                <td>
+                    {% for side in order.sides %}
+                        <p>{{ side }}</p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for drink in order.drinks %}
+                        <p>{{ drink }}</p>
+                    {% endfor %}
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+</section>
+{% endblock %}

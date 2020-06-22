@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="title">Inventory:</div>
+
+<table>
+    <tr>
+        <th>Item Id</th>
+        <th>Item</th>
+        <th>Amount</th>
+    </tr>
+    {% for inv in inventory %}
+        <tr>
+            <td>
+                {{ inv.inv_id }}
+            </td>
+            <td>    
+                 {{ inv }} 
+            </td>
+            <td>{{ inv.amount }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div class="green-but"><a href="{{ url_for('update_inventory') }}">Update</a>
+</div>
+
+{% endblock %}

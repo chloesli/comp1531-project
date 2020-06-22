@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="ingredients-sec">
+<div class="title">Order Number #{{order.order_id}}:</div> 
+<div class="order-type" style="width:100%">
+    
+    {% for main in order.mains %}
+            {{ main }}
+            <ol>
+            {% for ingredient in main.ingredients %}
+                {% if ingredient.amount > 0 %}
+            <li> {{ ingredient }} ({{ ingredient.amount }})</li>
+                {%endif%}
+            {% endfor %}
+            </ol>
+    {% endfor %}
+    <p></p>
+    {% for side in order.sides %}
+        <p>{{ side }}</p>
+    {% endfor %}
+    {% for sundae in order.sundaes %}
+        <p>{{ sundae }}</p>
+    {% endfor %}
+
+    {% for drink in order.drinks %}
+        <p>{{ drink }}</p>
+    {% endfor %}
+
+</div>
+
+    {% if order.completed == True %}
+    Your order has been completed and is ready to collect!
+    {%else%}
+    Thank you for ordering with us! Your order is on its way!
+    {%endif%}
+
+<br>
+</section>
+{% endblock %}

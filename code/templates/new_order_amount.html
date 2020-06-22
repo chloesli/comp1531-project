@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<section class="ingredients-sec">
+<br>
+<form class="order-type" style="width:100%" method="GET" action="{{ url_for('new_order') }}">
+    <h1>How many mains would you like? </h1>
+    <input type="number" max="6" value="1" name="amount"></input>
+
+    <input class="green-but" type="submit" value="Next">
+</form>
+</section>
+{% endblock %}
